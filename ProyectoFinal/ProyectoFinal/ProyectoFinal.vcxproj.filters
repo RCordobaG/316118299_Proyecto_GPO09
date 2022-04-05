@@ -15,6 +15,38 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\anim.frag">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\anim.vs">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\lamp.frag">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\lamp.vs">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\lighting.frag">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\lighting.vs">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\modelLoading.frag">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\modelLoading.vs">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\SkyBox.frag">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+    <None Include="Shaders\SkyBox.vs">
+      <Filter>Archivos de encabezado</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="MainPrueba.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
