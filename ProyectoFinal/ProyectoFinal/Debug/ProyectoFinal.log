@@ -1,26 +1,16 @@
-<<<<<<< Updated upstream
-﻿  Iluminacion.cpp
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Model.h(213,24): error C3861: 'stbi_load': identifier not found
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Model.h(233,3): error C3861: 'stbi_image_free': identifier not found
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Model.h(238,3): error C3861: 'stbi_image_free': identifier not found
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(205,30): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(516,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(517,17): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(521,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(522,21): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(524,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Iluminacion.cpp(525,13): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-=======
 ﻿  Main.cpp
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(519,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(417,24): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(983,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(984,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(988,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(989,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(991,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(992,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
-  ProyectoFinal.vcxproj -> C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\316118299_Proyecto_GPO09\ProyectoFinal\Debug\ProyectoFinal.exe
->>>>>>> Stashed changes
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(519,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(417,24): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(983,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(984,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(988,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(989,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(991,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(992,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+soil2-debug.lib(etc1_utils.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(etc1_utils.obj)' or at 'C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+soil2-debug.lib(image_helper.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_helper.obj)' or at 'C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+soil2-debug.lib(SOIL2.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(SOIL2.obj)' or at 'C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+  ProyectoFinal.vcxproj -> C:\Users\Rodrigo\Documents\CompuGrafica\ProyectoFinal\Github\316118299_Proyecto_GPO09\316118299_Proyecto_GPO09\ProyectoFinal\Debug\ProyectoFinal.exe
