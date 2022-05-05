@@ -196,9 +196,21 @@ int main()
 	Shader animShader("Shaders/anim.vs", "Shaders/anim.frag");
 
 	Model Fachada((char*)"Models/fachada/fachada.obj");
+	Model pins((char*)"Models/pinFormation/pinFormation.obj");
+
+	Model Colector((char*)"Models/Colector/Colector.obj");
+	Model Panel((char*)"Models/ControlPanel/control.obj");
+	Model Mesa((char*)"Models/Mesa/mesa.obj");
+	Model pin((char*)"Models/Pin/pin.obj");
+	Model ScoreBoard((char*)"Models/scoreboard/scoreboard.obj");
+	Model Chair((char*)"Models/Silla/silla.obj");
+	Model Sillas((char*)"Models/Sillas/sillasMult.obj");
+	Model SillasAlt((char*)"Models/SillasAlt/sillasMult.obj");
 
 	//Objeto traslucido
 	Model FachadaCristales((char*)"Models/fachada/fachadaCristales.obj");
+	Model PuertaIzq((char*)"Models/Puertas/puertaIzq2.obj");
+	Model PuertaDer((char*)"Models/Puertas/puertaDer2.obj");
 
 	// Build and compile our shader program
 
@@ -513,31 +525,282 @@ int main()
 
 		glBindVertexArray(VAO);
 		glm::mat4 tmp = glm::mat4(1.0f); //Temp
+		glm::mat4 modelPos = glm::mat4(1.0f); //Temp
 
 
 
 		//Carga de modelo 
 		//Fachada
+		//Modelos estáticos (principales)
 		view = camera.GetViewMatrix();
 		glm::mat4 model(1);
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		model = glm::mat4(1);
+		modelPos = model = glm::translate(model, glm::vec3(-100.0f,0.0f,-100.0f));
 		//model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
 		//model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Fachada.Draw(lightingShader);
-	
+		//Pinos estáticos (no animados)
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pins.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(31.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pins.Draw(lightingShader);
+
+		//Colectores
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Colector.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(16.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Colector.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(14.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Colector.Draw(lightingShader);
+
+		//Paneles de control
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		//model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Panel.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(16.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Panel.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(14.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Panel.Draw(lightingShader);
+
+		//Mesas
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Mesa.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(16.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Mesa.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(14.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Mesa.Draw(lightingShader);
+
+		//Bolos
+		//Primera hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Segunda Hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -0.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -0.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Tercera hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.6f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.6f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Cuarta hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.85f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.85f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+
+		//Pantallas de score
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		ScoreBoard.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(14.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		ScoreBoard.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(14.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		ScoreBoard.Draw(lightingShader);
+
+		//Sillas
+		//Primera mesa
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-2.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+
+		//Segunda mesa
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(13.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+
+		//Tercera mesa
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(12.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Chair.Draw(lightingShader);
+
+		//Sillas empotradas
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Sillas.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(16.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Sillas.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(15.5f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Sillas.Draw(lightingShader);
+
+		//Orientación inversa
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		SillasAlt.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(15.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		SillasAlt.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(15.0f, 0.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		SillasAlt.Draw(lightingShader);
+
 		//Modelos traslucidos
 		//Cristales fachada
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::mat4(1);
+		model = modelPos;
 		//model = glm::scale(model, glm::vec3(1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
 		FachadaCristales.Draw(lightingShader);
+
+		//Puertas
+		tmp = model = modelPos;
+		//model = glm::scale(model, glm::vec3(1.0f));
+		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -30.7f));
+		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
+		PuertaIzq.Draw(lightingShader);
+		model = tmp;
+		//model = glm::scale(model, glm::vec3(1.0f));
+		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -20.7f));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
+		PuertaDer.Draw(lightingShader);
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		glBindVertexArray(0);

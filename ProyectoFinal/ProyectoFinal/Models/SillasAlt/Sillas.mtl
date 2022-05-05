@@ -1,0 +1,91 @@
+newmtl sillasMult:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blanco.png
+Ni 1.00
+newmtl sillasMult:pasted__lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blanco.png
+Ni 1.00
+newmtl sillasMult:pasted__lambert2SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blanco.png
+Ni 1.00
+newmtl sillasMult:pasted__phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd gris.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 18.00
+newmtl sillasMult:pasted__phong1SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd gris.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 18.00
+newmtl sillasMult:pasted__phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd amf_silla.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 49.63
+newmtl sillasMult:pasted__phong3SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd amf_silla.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 49.63
+newmtl sillasMult:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd gris.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 18.00
+newmtl sillasMult:phong2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd negro.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 18.00
+newmtl sillasMult:phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd amf_silla.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 49.63
