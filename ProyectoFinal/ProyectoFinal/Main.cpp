@@ -44,7 +44,10 @@ bool keys[1024];
 bool firstMouse = true;
 float range = 0.0f;
 float rot = 0.0f;
+float DoorRot = 180.0f;
 float movCamera = 0.0f;
+bool isDoorOpen = false;
+bool doorMoving = false;
 
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
@@ -428,6 +431,23 @@ int main()
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		// Draw skybox as last
+		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+		SkyBoxshader.Use();
+		glm::mat4 view;
+		view = camera.GetViewMatrix();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		// skybox cube
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // Set depth function back to default
+
 
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
@@ -443,9 +463,9 @@ int main()
 		// == ==========================
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.5f, 0.5f, 0.5f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.4f, 0.4f, 0.4f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.3f, 0.3f, 0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.2f, 0.2f, 0.2f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.7f, 0.7f, 0.7f);
 
 
 		// Point light 1
@@ -502,7 +522,7 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 32.0f);
 
 		// Create camera transformations
-		glm::mat4 view;
+		
 		view = camera.GetViewMatrix();
 
 
@@ -779,9 +799,7 @@ int main()
 		//Cristales fachada
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 		model = modelPos;
-		//model = glm::scale(model, glm::vec3(1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
 		FachadaCristales.Draw(lightingShader);
@@ -790,16 +808,16 @@ int main()
 		tmp = model = modelPos;
 		//model = glm::scale(model, glm::vec3(1.0f));
 		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -30.7f));
-		model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-DoorRot), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
 		PuertaIzq.Draw(lightingShader);
 		model = tmp;
 		//model = glm::scale(model, glm::vec3(1.0f));
 		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -20.7f));
-		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(DoorRot), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.5);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 1.0);
 		PuertaDer.Draw(lightingShader);
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
@@ -831,24 +849,6 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		glBindVertexArray(0);
-
-
-		// Draw skybox as last
-		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
-		SkyBoxshader.Use();
-		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
-		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
-		// skybox cube
-		glBindVertexArray(skyboxVAO);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-		glDepthFunc(GL_LESS); // Set depth function back to default
-
-
 
 
 		// Swap the screen buffers
@@ -947,6 +947,21 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 
 	}
 
+	if (keys[GLFW_KEY_P])
+	{
+		doorMoving = true;
+		if (isDoorOpen)
+		{
+			isDoorOpen = false;
+			//DoorRot = 180.0f;
+		}
+		else
+		{
+			isDoorOpen = true;
+			//DoorRot = 90.0f;
+		}
+	}
+
 
 	if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
 	{
@@ -997,6 +1012,36 @@ void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 // Moves/alters the camera positions based on user input
 void DoMovement()
 {
+	//Puertas
+	//DoorRot = 90 - abierto
+	//			180 - cerrado
+	if (doorMoving)
+	{
+		if (isDoorOpen)
+		{
+			if (DoorRot >= 180.0f)
+			{
+				DoorRot = 180.0f;
+				doorMoving = false;
+			}
+			else
+			{
+				DoorRot = DoorRot + 2.0f;
+			}
+		}
+		else
+		{
+			if (DoorRot <= 30.0f)
+			{
+				DoorRot = 30.0f;
+				doorMoving = false;
+			}
+			else
+			{
+				DoorRot = DoorRot - 2.0f;
+			}
+		}
+	}
 
 	if (keys[GLFW_KEY_1])
 	{
