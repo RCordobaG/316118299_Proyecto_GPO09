@@ -3,18 +3,21 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 newmtl Colector:lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd rojo.png
 Ni 1.00
 newmtl Colector:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
@@ -23,18 +26,21 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 newmtl Colector1:lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd rojo.png
 Ni 1.00
 newmtl Colector1:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
@@ -43,18 +49,21 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 newmtl Colector2:lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd rojo.png
 Ni 1.00
 newmtl Colector2:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
@@ -781,6 +790,13 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd vector2.png
 Ni 1.00
+newmtl lambert9SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Score.png
+Ni 1.00
 newmtl mesa:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -944,7 +960,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd 51+F3H4DarL._AC_SX425_.jpg
+map_Kd 51+F3H4DarL._AC_SX425_.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 map_Ks blanco.png
