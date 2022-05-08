@@ -67,6 +67,41 @@ map_Kd negro.png
 Ni 1.00
 Ks 0.50 0.50 0.50
 Ns 18.00
+newmtl CompSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd negroPC.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 48.00
+newmtl CompSG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd azulPC.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 48.00
+newmtl Floppy_1SG
+illum 4
+Kd 0.04 0.04 0.04
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 48.00
+newmtl Floppy_1SG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd grisPC.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 48.00
 newmtl PanelControl:lambert2SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -790,6 +825,13 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd vector2.png
 Ni 1.00
+newmtl lambert9SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd Score.png
+Ni 1.00
 newmtl mesa:phong1SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -943,7 +985,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 0.30 0.30 0.30
-map_Kd gris.png
+map_Kd grisClaro.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 map_Ks blanco.png
