@@ -214,6 +214,8 @@ int main()
 	Model SillasAlt((char*)"Models/SillasAlt/sillasMult.obj");
 	Model Boleras((char*)"Models/fachada/boleras.obj");
 	Model Recepcion((char*)"Models/Moviles/puertaR.obj");
+	Model PC((char*)"Models/Computadoras/pc.obj");
+
 
 	//Objeto traslucido
 	Model FachadaCristales((char*)"Models/fachada/fachadaCristales.obj");
@@ -805,6 +807,15 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		SillasAlt.Draw(lightingShader);
+
+		//Computadoras
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		//model = glm::translate(model, glm::vec3(15.8f, -3.9f, -15.5f));
+		//model = glm::rotate(model, glm::radians(recRot), glm::vec3(0.0f, 0.0f, 1));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		PC.Draw(lightingShader);
 
 		//Objetos moviles
 		view = camera.GetViewMatrix();
