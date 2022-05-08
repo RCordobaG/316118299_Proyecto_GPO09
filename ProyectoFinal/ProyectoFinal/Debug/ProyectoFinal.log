@@ -1,16 +1,11 @@
 ﻿  Main.cpp
 C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\modelAnim.h(519,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(435,24): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1063,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1064,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1068,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1069,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1071,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1072,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-soil2-debug.lib(etc1_utils.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(etc1_utils.obj)' or at 'C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
-soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
-soil2-debug.lib(image_helper.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_helper.obj)' or at 'C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
-soil2-debug.lib(SOIL2.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(SOIL2.obj)' or at 'C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\Debug\soil2-debug.pdb'; linking object as if no debug info
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(439,24): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1083,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1084,11): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1088,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1089,18): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1091,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\ProyectoFinal\Main.cpp(1092,10): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
   ProyectoFinal.vcxproj -> C:\Users\Rodrigo\Documents\Github\ProyectoCG\316118299_Proyecto_GPO09\ProyectoFinal\Debug\ProyectoFinal.exe
