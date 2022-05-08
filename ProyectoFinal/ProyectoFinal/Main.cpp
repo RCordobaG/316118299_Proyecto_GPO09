@@ -51,6 +51,7 @@ bool isDoorOpen = true;
 bool doorMoving = false;
 bool isRecOpen = false;
 bool recMoving = false;
+bool drawLightCubes = false;
 
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
@@ -92,12 +93,12 @@ int playIndex = 0;
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
 	//Luz PB
-	glm::vec3(8,3,-125),
+	glm::vec3(8,3,-120),
 	//Luz1F
 	//glm::vec3(-15,23,-95),
-	glm::vec3(5,20,-85),
-	//Luz Fachada
-	glm::vec3(-17.5,9,-50),
+	glm::vec3(0,18,-90),
+	//Luz Luminaria
+	glm::vec3(6.9,11,-61),
 	//Luz bolos
 	glm::vec3(0.8,14.6,-135)
 };
@@ -209,6 +210,9 @@ int main()
 	Model Fachada((char*)"Models/fachada/fachada2.obj");
 	Model pins((char*)"Models/pinFormation/pinFormation.obj");
 	Model Banqueta((char*)"Models/fachada/banqueta.obj");
+	Model Edificios((char*)"Models/fachada/Extras/buildings.obj");
+	Model Luminaria((char*)"Models/fachada/Extras/luminaria.obj");
+
 
 
 	Model Colector((char*)"Models/Colector/Colector.obj");
@@ -490,8 +494,8 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 1, 1, 1);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 0.5, 0.5, 0.5);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.027f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 0.0028f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.022f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 0.0019f);
 
 
 
@@ -499,11 +503,11 @@ int main()
 		//1F
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.3f, 0.3f, 0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), 0.5f, 0.5f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 0.1f, 0.1f, 0.2f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.045f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 0.0075f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.07f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"), 0.017f);
 
 		// Point light 3
 		//Fachada
@@ -512,8 +516,8 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].diffuse"), 1.0f, 1.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[2].specular"), 1.0f, 1.0f, 0.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].constant"), 1.0f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.07f);
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 0.017f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].linear"), 0.045f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[2].quadratic"), 0.0075f);
 
 		// Point light 4
 		//Bolera
@@ -586,6 +590,18 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Banqueta.Draw(lightingShader);
+		//Edificios Adicionales (Ambiente)
+		view = camera.GetViewMatrix();
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Edificios.Draw(lightingShader);
+		//Luminaria
+		view = camera.GetViewMatrix();
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Luminaria.Draw(lightingShader);
 		//Boleras
 		view = camera.GetViewMatrix();
 		model = modelPos;
@@ -808,7 +824,7 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Sillas.Draw(lightingShader);
 
-		//Orientaci n inversa
+		//Orientacion inversa
 		view = camera.GetViewMatrix();
 		model = modelPos;
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -849,10 +865,6 @@ int main()
 		//Cristales fachada
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		model = modelPos;
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 1.0);
-		FachadaCristales.Draw(lightingShader);
 
 		//Puertas
 		tmp = model = modelPos;
@@ -869,6 +881,11 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 1.0);
 		PuertaDer.Draw(lightingShader);
+
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 1.0);
+		FachadaCristales.Draw(lightingShader);
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 		glBindVertexArray(0);
@@ -896,7 +913,10 @@ int main()
 			model = glm::translate(model, pointLightPositions[i]);
 			model = glm::scale(model, glm::vec3(0.2f)); // Make it a smaller cube
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			if (drawLightCubes || (i==2))
+			{
+				glDrawArrays(GL_TRIANGLES, 0, 36);
+			}
 		}
 		glBindVertexArray(0);
 

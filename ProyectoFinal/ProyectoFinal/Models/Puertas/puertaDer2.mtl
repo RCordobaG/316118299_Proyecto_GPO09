@@ -1,20 +1,9 @@
-newmtl puertaIzq4:phong1SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 0.30 0.30 0.30
-map_Kd gris.png
-Ni 1.00
-Ks 0.00 0.00 0.00
-map_Ks blanco.png
-Ns 98.00
-newmtl puertaIzq4:phong2SG
+newmtl phong2SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd negro.png
+map_Kd grisMuyClaro.png
 Ni 1.00
-Ks 0.00 0.00 0.00
-map_Ks blanco.png
+Ks 0.50 0.50 0.50
 Ns 18.00
