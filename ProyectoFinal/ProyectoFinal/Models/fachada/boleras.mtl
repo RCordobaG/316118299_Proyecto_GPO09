@@ -770,6 +770,61 @@ Ni 1.00
 Ks 0.00 0.00 0.00
 map_Ks blanco.png
 Ns 49.63
+newmtl ball:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd DoubleBall.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl buildings:initialShadingGroup
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd building1.jpg
+Ni 1.00
+newmtl buildings:lambert6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blanco.png
+Ni 1.00
+newmtl buildings:lambert12SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd naranja.png
+Ni 1.00
+newmtl buildings:lambert16SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd building2.jpg
+Ni 1.00
+newmtl buildings:phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd cortina.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl buildings:phong8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd ventana.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
 newmtl initialShadingGroup
 illum 4
 Kd 0.50 0.50 0.50
@@ -831,6 +886,20 @@ Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd Score.png
+Ni 1.00
+newmtl lambert10SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd asfalto.jpg
+Ni 1.00
+newmtl lambert11SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd banqueta.jpg
 Ni 1.00
 newmtl mesa:phong1SG
 illum 4
@@ -985,7 +1054,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 0.30 0.30 0.30
-map_Kd grisClaro.png
+map_Kd vidrios.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 map_Ks blanco.png
@@ -1025,6 +1094,16 @@ Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd blanco.png
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks blanco.png
+Ns 18.00
+newmtl phong7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd negro.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 map_Ks blanco.png

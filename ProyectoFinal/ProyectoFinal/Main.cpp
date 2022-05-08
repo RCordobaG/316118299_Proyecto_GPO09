@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 
 // GLEW
 #include <GL/glew.h>
@@ -47,16 +48,23 @@ float rot = 0.0f;
 float DoorRot = 180.0f;
 float recRot = 0.0f;
 float movCamera = 0.0f;
+float ballRotX,ballRotY,ballRotZ = 0.0f;
+float ballPosX, ballPosY, ballPosZ = 0.0f;
+float amX,amY,amZ = 0.0f;
 bool isDoorOpen = true;
 bool doorMoving = false;
 bool isRecOpen = false;
 bool recMoving = false;
 bool drawLightCubes = false;
+bool ballMoving = true;
 
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
-glm::vec3 PosIni(0.0f, 2.0f, -30.0f);
+//glm::vec3 PosIni(0.0f, 2.0f, -30.0f);
 glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
+
+//Keyframe positions
+glm::vec3 ballPosIni(0.4, 11.725, -7, 5);
 
 bool active;
 
@@ -209,11 +217,12 @@ int main()
 
 	Model Fachada((char*)"Models/fachada/fachada2.obj");
 	Model pins((char*)"Models/pinFormation/pinFormation.obj");
+	Model Balls((char*)"Models/Balls/balls.obj");
 	Model Banqueta((char*)"Models/fachada/banqueta.obj");
 	Model Edificios((char*)"Models/fachada/Extras/buildings.obj");
 	Model Luminaria((char*)"Models/fachada/Extras/luminaria.obj");
 
-
+	Model BowlingBall((char*)"Models/BowlingBall/ball.obj");
 
 	Model Colector((char*)"Models/Colector/Colector.obj");
 	Model Panel((char*)"Models/ControlPanel/control.obj");
@@ -609,6 +618,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Boleras.Draw(lightingShader);
+
 		//Pinos estaticos (no animados)
 		view = camera.GetViewMatrix();
 		model = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0));
@@ -620,6 +630,13 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		pins.Draw(lightingShader);
+
+		//Bolas de bolos estáticas
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Balls.Draw(lightingShader);
 
 		//Colectores
 		view = camera.GetViewMatrix();
@@ -678,75 +695,6 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Mesa.Draw(lightingShader);
-
-		//Bolos
-		//Primera hilera
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-
-		//Segunda Hilera
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -0.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -0.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-
-		//Tercera hilera
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(0.6f, 0.0f, -1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(-0.6f, 0.0f, -1.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-
-		//Cuarta hilera
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(0.85f, 0.0f, -1.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(-0.85f, 0.0f, -1.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -1.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-		view = camera.GetViewMatrix();
-		model = modelPos;
-		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -1.5f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
-
 
 		//Pantallas de score
 		view = camera.GetViewMatrix();
@@ -852,7 +800,9 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		PC.Draw(lightingShader);
 
+		//----------------------------------------------------------------------------------------
 		//Objetos moviles
+		//Puerta recepcion - Animacion sencilla 2
 		view = camera.GetViewMatrix();
 		model = modelPos;
 		model = glm::translate(model, glm::vec3(15.8f, -3.9f, -15.5f));
@@ -861,6 +811,87 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Recepcion.Draw(lightingShader);
 
+		//Bola Bolos
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(ballPosX,ballPosY,ballPosZ));
+		model = glm::rotate(model,glm::radians(ballRotX), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, glm::radians(ballRotY), glm::vec3(0, 1, 0));
+		model = glm::rotate(model, glm::radians(ballRotZ), glm::vec3(0, 0, 1));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		BowlingBall.Draw(lightingShader);
+
+		//Bolos
+		//Primera hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Segunda Hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -0.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -0.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Tercera hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.6f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.6f, 0.0f, -1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+		//Cuarta hilera
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.85f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.85f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -1.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		pin.Draw(lightingShader);
+
+
+		//------------------------------------------------------------------------------
 		//Modelos traslucidos
 		//Cristales fachada
 		glEnable(GL_BLEND);
@@ -1047,6 +1078,25 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		}
 	}
 
+	if (keys[GLFW_KEY_B])
+	{
+		amX = rand() % 20;
+		amY = rand() % 20;
+		amZ = rand() % 20;
+		if ((rand() % 4) >= 2)
+		{
+			amX = -amX;
+		}
+		if ((rand() % 4) >= 2)
+		{
+			amY = -amY;
+		}
+		if ((rand() % 4) >= 2)
+		{
+			amZ = -amZ;
+		}
+	}
+
 
 	if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action)
 	{
@@ -1163,20 +1213,18 @@ void DoMovement()
 
 	}
 
-	if (keys[GLFW_KEY_2])
+	//Bowling Ball
+	if (ballMoving)
 	{
-		if (rotRodIzq < 80.0f)
-			rotRodIzq += 1.0f;
-
+		ballRotX += amX;
+		ballRotY += amY;
+		ballRotZ += amZ;
 	}
 
-	if (keys[GLFW_KEY_3])
+	if (keys[GLFW_KEY_Y])
 	{
-		if (rotRodIzq > -45)
-			rotRodIzq -= 1.0f;
-
+		ballPosX = ballPosX + 1;
 	}
-
 
 
 	//Mov Personaje
