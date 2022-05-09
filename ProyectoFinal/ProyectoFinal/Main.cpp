@@ -49,7 +49,6 @@ float DoorRot = 180.0f;
 float recRot = 0.0f;
 float movCamera = 0.0f;
 float ballRotX,ballRotY,ballRotZ = 0.0f;
-float ballPosX, ballPosY, ballPosZ = 0.0f;
 float amX,amY,amZ = 0.0f;
 bool isDoorOpen = true;
 bool doorMoving = false;
@@ -64,7 +63,13 @@ glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);
 
 //Keyframe positions
-glm::vec3 ballPosIni(0.4, 11.725, -7, 5);
+glm::vec3 ballPosIni(0.4, 11.725, -7.5);
+glm::vec3 escobPosIni(0, 0, 0);
+glm::vec3 pinPosIni(0, 0, 0);
+
+glm::vec3 Pos(0, 0, 0);
+glm::vec3 pinOffset(1, 12, -34.5);
+
 
 bool active;
 
@@ -74,21 +79,41 @@ GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
 GLfloat lastFrame = 0.0f;  	// Time of last frame
 
 // Keyframes
-float posX = PosIni.x, posY = PosIni.y, posZ = PosIni.z, rotRodIzq = 0;
+float ballPosX = ballPosIni.x, ballPosY = ballPosIni.y, ballPosZ = ballPosIni.z, 
+escobPosX = escobPosIni.x, escobPosY = escobPosIni.y, escobPosZ = escobPosIni.z,
+pinPosX = pinPosIni.x, pinPosY = pinPosIni.y, pinPosZ = pinPosIni.z;
+float pinRot = 0.0f;
 
 #define MAX_FRAMES 9
-int i_max_steps = 190;
+int i_max_steps = 100;
 int i_curr_steps = 0;
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
-	float posX;		//Variable para PosicionX
-	float posY;		//Variable para PosicionY
-	float posZ;		//Variable para PosicionZ
-	float incX;		//Variable para IncrementoX
-	float incY;		//Variable para IncrementoY
-	float incZ;		//Variable para IncrementoZ
-	float rotRodIzq;
+	//Bola bolos
+	float ballPosX;		//Variable para PosicionX
+	float ballPosY;		//Variable para PosicionY
+	float ballPosZ;		//Variable para PosicionZ
+	float ballIncX;		//Variable para IncrementoX
+	float ballIncY;		//Variable para IncrementoY
+	float ballIncZ;		//Variable para IncrementoZ
+	bool ballMoving;
+	//Escobilla
+	float escobPosX;		//Variable para PosicionX
+	float escobPosY;		//Variable para PosicionY
+	float escobPosZ;		//Variable para PosicionZ
+	float escobIncX;		//Variable para IncrementoX
+	float escobIncY;		//Variable para IncrementoY
+	float escobIncZ;		//Variable para IncrementoZ
+
+	float pinPosX;		//Variable para PosicionX
+	float pinPosY;		//Variable para PosicionY
+	float pinPosZ;		//Variable para PosicionZ
+	float pinIncX;		//Variable para IncrementoX
+	float pinIncY;		//Variable para IncrementoY
+	float pinIncZ;		//Variable para IncrementoZ
+
+	float pinRot;
 	float rotInc;
 
 }FRAME;
@@ -119,13 +144,21 @@ glm::vec3 LightP1;
 void saveFrame(void)
 {
 
-	printf("posx %f\n", posX);
+	printf("Frame Saved %f, %f, %f\n", Pos.x, Pos.y, Pos.z);
 
-	KeyFrame[FrameIndex].posX = posX;
-	KeyFrame[FrameIndex].posY = posY;
-	KeyFrame[FrameIndex].posZ = posZ;
+	KeyFrame[FrameIndex].ballPosX = ballPosX;
+	KeyFrame[FrameIndex].ballPosY = ballPosY;
+	KeyFrame[FrameIndex].ballPosZ = ballPosZ;
 
-	KeyFrame[FrameIndex].rotRodIzq = rotRodIzq;
+	KeyFrame[FrameIndex].escobPosX = escobPosX;
+	KeyFrame[FrameIndex].escobPosY = escobPosY;
+	KeyFrame[FrameIndex].escobPosZ = escobPosZ;
+
+	KeyFrame[FrameIndex].pinPosX = pinPosX;
+	KeyFrame[FrameIndex].pinPosY = pinPosY;
+	KeyFrame[FrameIndex].pinPosZ = pinPosZ;
+
+	KeyFrame[FrameIndex].pinRot = pinRot;
 
 
 	FrameIndex++;
@@ -133,26 +166,59 @@ void saveFrame(void)
 
 void resetElements(void)
 {
-	posX = KeyFrame[0].posX;
-	posY = KeyFrame[0].posY;
-	posZ = KeyFrame[0].posZ;
+	ballPosX = KeyFrame[0].ballPosX;
+	ballPosY = KeyFrame[0].ballPosY;
+	ballPosZ = KeyFrame[0].ballPosZ;
 
-	rotRodIzq = KeyFrame[0].rotRodIzq;
+	escobPosX = KeyFrame[0].escobPosX;
+	escobPosY = KeyFrame[0].escobPosY;
+	escobPosZ = KeyFrame[0].escobPosZ;
 
+	pinPosX = KeyFrame[0].pinPosX;
+	pinPosY = KeyFrame[0].pinPosY;
+	pinPosZ = KeyFrame[0].pinPosZ;
+
+	pinRot = KeyFrame[0].pinRot;
 }
 
 void interpolation(void)
 {
+	KeyFrame[playIndex].ballIncX = (KeyFrame[playIndex + 1].ballPosX - KeyFrame[playIndex].ballPosX) / i_max_steps;
+	KeyFrame[playIndex].ballIncY = (KeyFrame[playIndex + 1].ballPosY - KeyFrame[playIndex].ballPosY) / i_max_steps;
+	KeyFrame[playIndex].ballIncZ = (KeyFrame[playIndex + 1].ballPosZ - KeyFrame[playIndex].ballPosZ) / i_max_steps;
+	
 
-	KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].posX - KeyFrame[playIndex].posX) / i_max_steps;
-	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].posY - KeyFrame[playIndex].posY) / i_max_steps;
-	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].posZ - KeyFrame[playIndex].posZ) / i_max_steps;
+	KeyFrame[playIndex].escobIncX = (KeyFrame[playIndex + 1].escobPosX - KeyFrame[playIndex].escobPosX) / i_max_steps;
+	KeyFrame[playIndex].escobIncY = (KeyFrame[playIndex + 1].escobPosY - KeyFrame[playIndex].escobPosY) / i_max_steps;
+	KeyFrame[playIndex].escobIncZ = (KeyFrame[playIndex + 1].escobPosZ - KeyFrame[playIndex].escobPosZ) / i_max_steps;
 
-	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
+	KeyFrame[playIndex].pinIncX = (KeyFrame[playIndex + 1].pinPosX - KeyFrame[playIndex].pinPosX) / i_max_steps;
+	KeyFrame[playIndex].pinIncY = (KeyFrame[playIndex + 1].pinPosY - KeyFrame[playIndex].pinPosY) / i_max_steps;
+	KeyFrame[playIndex].pinIncZ = (KeyFrame[playIndex + 1].pinPosZ - KeyFrame[playIndex].pinPosZ) / i_max_steps;
+	
+
+	KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].pinRot - KeyFrame[playIndex].pinRot) / 20;
+
+	//KeyFrame[playIndex].rotInc = (KeyFrame[playIndex + 1].rotRodIzq - KeyFrame[playIndex].rotRodIzq) / i_max_steps;
 
 }
 
+void setFrameValues(float ballX, float ballY, float ballZ,float escobX, float escobY, float escobZ, float pinX, float pinY, float pinZ, float rot)
+{
+	ballPosX = ballX;
+	ballPosY = ballY;
+	ballPosZ = ballZ;
 
+	escobPosX = escobX;
+	escobPosY = escobY;
+	escobPosZ = escobZ;
+	
+	pinPosX = pinX;
+	pinPosY = pinY;
+	pinPosZ = pinZ;
+
+	pinRot = rot;
+}
 
 
 int main()
@@ -221,6 +287,9 @@ int main()
 	Model Banqueta((char*)"Models/fachada/banqueta.obj");
 	Model Edificios((char*)"Models/fachada/Extras/buildings.obj");
 	Model Luminaria((char*)"Models/fachada/Extras/luminaria.obj");
+	Model Concealer((char*)"Models/fachada/Extras/concealer.obj");
+	Model Escobilla((char*)"Models/Moviles/escobilla.obj");
+
 
 	Model BowlingBall((char*)"Models/BowlingBall/ball.obj");
 
@@ -228,6 +297,7 @@ int main()
 	Model Panel((char*)"Models/ControlPanel/control.obj");
 	Model Mesa((char*)"Models/Mesa/mesa.obj");
 	Model pin((char*)"Models/Pin/pin.obj");
+	Model pin2((char*)"Models/Pin/pinT.obj");
 	Model ScoreBoard((char*)"Models/scoreboard/scoreboard.obj");
 	Model Chair((char*)"Models/Silla/silla.obj");
 	Model Sillas((char*)"Models/Sillas/sillasMult.obj");
@@ -245,16 +315,35 @@ int main()
 
 	// Build and compile our shader program
 
-	//Inicializaci n de KeyFrames
+	//Inicializacion de KeyFrames
 
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
-		KeyFrame[i].posX = 0;
-		KeyFrame[i].incX = 0;
-		KeyFrame[i].incY = 0;
-		KeyFrame[i].incZ = 0;
-		KeyFrame[i].rotRodIzq = 0;
-		KeyFrame[i].rotInc = 0;
+		KeyFrame[i].ballPosX = 0;
+		KeyFrame[i].ballPosY = 0;
+		KeyFrame[i].ballPosZ = 0;
+		KeyFrame[i].ballIncX = 0;
+		KeyFrame[i].ballIncY = 0;
+		KeyFrame[i].ballIncZ = 0;
+
+		KeyFrame[i].escobPosX = 0;
+		KeyFrame[i].escobPosY = 0;
+		KeyFrame[i].escobPosZ = 0;
+		KeyFrame[i].escobIncX = 0;
+		KeyFrame[i].escobIncY = 0;
+		KeyFrame[i].escobIncZ = 0;
+
+		KeyFrame[i].pinPosX = 0;
+		KeyFrame[i].pinPosY = 0;
+		KeyFrame[i].pinPosZ = 0;
+		KeyFrame[i].pinIncX = 0;
+		KeyFrame[i].pinIncY = 0;
+		KeyFrame[i].pinIncZ = 0;
+
+		KeyFrame[i].pinRot = 0;
+
+
+
 	}
 
 
@@ -440,6 +529,36 @@ int main()
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 1000.0f);
 
+	//Create Keyframe Animation
+	//F1
+	setFrameValues(0.75,11.725,-13,0,0,0,0,10,0,0);
+	saveFrame();
+	//F2
+	setFrameValues(0.4, 11.725, -7.5,0,0,0,0,0,0,0);
+	saveFrame();
+	//F3
+	setFrameValues(0.4, 15, -7.5, 0, 0, 0, 0, 0, 0, 0);
+	saveFrame();
+	//F4
+	setFrameValues(0.75, 11.725, -19, 0, 0, 0, 0, 0, 0, 0);
+	saveFrame();
+	//F4
+	setFrameValues(0.75, 11.725, -34, 0, 0, 0, 0, 0, 0, 0);
+	saveFrame();
+	//F5
+	setFrameValues(0.75, 11.725, -40, 0, -4, 0, 0, -0.5, 0, 90);
+	saveFrame();
+	//F7
+	setFrameValues(0.75, 11.725, -40, 0, -4, -5, 0, 0, -10, 90);
+	saveFrame();
+	//F8
+	setFrameValues(0.75, 11.725, -40, 0, 0, -5, 0, 0, -10, 0);
+	saveFrame();
+	//F9
+	setFrameValues(0.75, 11.725, -40, 0, 0, 0, 0, 10, 0, 0);
+	saveFrame();
+
+
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -583,7 +702,7 @@ int main()
 
 		//Carga de modelo 
 		//Fachada
-		//Modelos est ticos (principales)
+		//Modelos estaticos (principales)
 		view = camera.GetViewMatrix();
 		glm::mat4 model(1);
 		model = glm::mat4(1);
@@ -599,6 +718,11 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Banqueta.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Concealer.Draw(lightingShader);
 		//Edificios Adicionales (Ambiente)
 		view = camera.GetViewMatrix();
 		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
@@ -614,7 +738,7 @@ int main()
 		//Boleras
 		view = camera.GetViewMatrix();
 		model = modelPos;
-		//model = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0));
+		model = glm::translate(model, glm::vec3(0.3f, 0.0f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Boleras.Draw(lightingShader);
@@ -822,73 +946,113 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		BowlingBall.Draw(lightingShader);
 
+		//Escobilla
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(escobPosX, escobPosY, escobPosZ));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Escobilla.Draw(lightingShader);
+
 		//Bolos
 		//Primera hilera
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 
 		//Segunda Hilera
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -0.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(pinRot), glm::vec3(1, 0, 0));
+		//model = glm::rotate(model, glm::radians(pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -0.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 
 		//Tercera hilera
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		//model = glm::rotate(model, glm::radians(pinRot), glm::vec3(0, 0, 1));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.6f, 0.0f, -1.0f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(-0.6f, 0.0f, -1.0f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 
 		//Cuarta hilera
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.85f, 0.0f, -1.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(-0.85f, 0.0f, -1.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(-0.35f, 0.0f, -1.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 		view = camera.GetViewMatrix();
 		model = modelPos;
+		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -1.5f));
+		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
+		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
-		pin.Draw(lightingShader);
+		pin2.Draw(lightingShader);
 
 
 		//------------------------------------------------------------------------------
@@ -1001,11 +1165,19 @@ void animacion()
 		else
 		{
 			//Draw animation
-			posX += KeyFrame[playIndex].incX;
-			posY += KeyFrame[playIndex].incY;
-			posZ += KeyFrame[playIndex].incZ;
+			ballPosX += KeyFrame[playIndex].ballIncX;
+			ballPosY += KeyFrame[playIndex].ballIncY;
+			ballPosZ += KeyFrame[playIndex].ballIncZ;
 
-			rotRodIzq += KeyFrame[playIndex].rotInc;
+			escobPosX += KeyFrame[playIndex].escobIncX;
+			escobPosY += KeyFrame[playIndex].escobIncY;
+			escobPosZ += KeyFrame[playIndex].escobIncZ;
+
+			pinPosX += KeyFrame[playIndex].pinIncX;
+			pinPosY += KeyFrame[playIndex].pinIncY;
+			pinPosZ += KeyFrame[playIndex].pinIncZ;
+
+			pinRot += KeyFrame[playIndex].rotInc;
 
 			i_curr_steps++;
 		}
@@ -1037,16 +1209,16 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 
 	}
 
-	if (keys[GLFW_KEY_K])
-	{
-		if (FrameIndex < MAX_FRAMES)
-		{
-			saveFrame();
-		}
+	//if (keys[GLFW_KEY_K])
+	//{
+	//	if (FrameIndex < MAX_FRAMES)
+	//	{
+	//		saveFrame();
+	//	}
 
-		rot = -25.0f;//Variable que maneja el giro de la camara
+	//	rot = -25.0f;//Variable que maneja el giro de la camara
 
-	}
+	//}
 
 	if (keys[GLFW_KEY_P])
 	{
@@ -1221,32 +1393,43 @@ void DoMovement()
 		ballRotZ += amZ;
 	}
 
-	if (keys[GLFW_KEY_Y])
-	{
-		ballPosX = ballPosX + 1;
-	}
-
 
 	//Mov Personaje
-	if (keys[GLFW_KEY_H])
+	/*if (keys[GLFW_KEY_H])
 	{
-		posZ += 1;
+		ballPosZ += 0.5;
+		Pos.z += 0.5;
 	}
 
 	if (keys[GLFW_KEY_Y])
 	{
-		posZ -= 1;
+		ballPosZ -= 0.5;
+		Pos.z -= 0.5;
 	}
 
-	if (keys[GLFW_KEY_G])
+	if (keys[GLFW_KEY_U])
 	{
-		posX -= 1;
+		ballPosX -= 0.5;
+		Pos.x -= 0.5;
 	}
 
 	if (keys[GLFW_KEY_J])
 	{
-		posX += 1;
+		ballPosX += 0.5;
+		Pos.x += 0.5;
 	}
+
+	if (keys[GLFW_KEY_O])
+	{
+		ballPosY += 0.5;
+		Pos.y += 0.5;
+	}
+
+	if (keys[GLFW_KEY_P])
+	{
+		ballPosY -= 0.5;
+		Pos.y -= 0.5;
+	}*/
 
 
 
