@@ -47,6 +47,8 @@ float range = 0.0f;
 float rot = 0.0f;
 float DoorRot = 180.0f;
 float recRot = 0.0f;
+float chairZ = 0.0f;
+float refRot = 0.0f;
 float movCamera = 0.0f;
 float ballRotX,ballRotY,ballRotZ = 0.0f;
 float amX,amY,amZ = 0.0f;
@@ -54,8 +56,21 @@ bool isDoorOpen = true;
 bool doorMoving = false;
 bool isRecOpen = false;
 bool recMoving = false;
+bool isChairOpen = false;
+bool chairMoving = false;
 bool drawLightCubes = false;
 bool ballMoving = true;
+bool refDir = true;
+
+//Maquina estados servilleta
+bool napkinAttached = true;
+bool napkinFlew = false;
+bool napkinFlying = false;
+bool napkinFloored = false;
+
+glm::vec3 servPos;
+float servRot;
+float servRot2;
 
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
@@ -305,7 +320,10 @@ int main()
 	Model Boleras((char*)"Models/fachada/boleras.obj");
 	Model Recepcion((char*)"Models/Moviles/puertaR.obj");
 	Model PC((char*)"Models/Computadoras/pc.obj");
-
+	Model Servilletero((char*)"Models/Servilletero/servilletero.obj");
+	Model Refresco((char*)"Models/Refresco/tapa.obj");
+	Model Refresco2((char*)"Models/Refresco/tapaless.obj");
+	Model Servilleta((char*)"Models/Servilletero/servilleta.obj");
 
 
 	//Objeto traslucido
@@ -860,14 +878,15 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Chair.Draw(lightingShader);
 		view = camera.GetViewMatrix();
-		model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0));
+		model = glm::translate(model, glm::vec3(3.0f, 0.0f, chairZ));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Chair.Draw(lightingShader);
 
 		//Tercera mesa
 		view = camera.GetViewMatrix();
-		model = glm::translate(model, glm::vec3(12.0f, 0.0f, 0));
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(28.0f, 0.0f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Chair.Draw(lightingShader);
@@ -924,8 +943,81 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		PC.Draw(lightingShader);
 
+		//Objetos de ambiente
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Refresco.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, -0.5f));
+		//model = glm::rotate(model, glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Refresco.Draw(lightingShader);
+
+		//Servilleteros
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		//model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.5f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilletero.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(15.5f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilletero.Draw(lightingShader);
+		view = camera.GetViewMatrix();
+		model = glm::translate(model, glm::vec3(15.5f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilletero.Draw(lightingShader);
+
 		//----------------------------------------------------------------------------------------
 		//Objetos moviles
+		//Animaciones automaticas
+		//Refresco
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(3.0f, 13.82f, 5.5f));
+		model = glm::rotate(model, glm::radians(-refRot), glm::vec3(0.0f, 1.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Refresco2.Draw(lightingShader);
+
+		//Estatico
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		model = glm::translate(model, glm::vec3(1.75f, 13.85f, 5.5f));
+		tmp = model;
+		//model = glm::rotate(model, glm::radians(refRot), glm::vec3(0.0f, 1.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilleta.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		model = tmp;
+		model = glm::translate(model, glm::vec3(-2, -3, -3));
+		model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilleta.Draw(lightingShader);
+
+		//Movil
+		view = camera.GetViewMatrix();
+		model = tmp;
+		model = glm::translate(model, servPos);
+		model = glm::rotate(model, glm::radians(servRot), glm::vec3(1.0f, 0.0f, 0));
+		model = glm::rotate(model, glm::radians(servRot2), glm::vec3(0.0f, 1.0f, 0));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		Servilleta.Draw(lightingShader);
+
+
+
+		//Animaciones que activa el usuario
 		//Puerta recepcion - Animacion sencilla 2
 		view = camera.GetViewMatrix();
 		model = modelPos;
@@ -1250,6 +1342,21 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		}
 	}
 
+	if (keys[GLFW_KEY_C])
+	{
+		chairMoving = true;
+		if (isChairOpen)
+		{
+			isChairOpen = false;
+			//DoorRot = 180.0f;
+		}
+		else
+		{
+			isChairOpen = true;
+			//DoorRot = 90.0f;
+		}
+	}
+
 	if (keys[GLFW_KEY_B])
 	{
 		amX = rand() % 20;
@@ -1378,6 +1485,34 @@ void DoMovement()
 		}
 	}
 
+	if (chairMoving)
+	{
+		if (isChairOpen)
+		{
+			if (chairZ >= 3.0f)
+			{
+				chairZ = 3.0f;
+				chairMoving = false;
+			}
+			else
+			{
+				chairZ = chairZ + 0.2f;
+			}
+		}
+		else
+		{
+			if (chairZ <= 0.0f)
+			{
+				chairZ = 0.0f;
+				chairMoving = false;
+			}
+			else
+			{
+				chairZ = chairZ - 0.2f;
+			}
+		}
+	}
+
 	if (keys[GLFW_KEY_1])
 	{
 
@@ -1393,45 +1528,116 @@ void DoMovement()
 		ballRotZ += amZ;
 	}
 
-
-	//Mov Personaje
-	/*if (keys[GLFW_KEY_H])
+	//Rotacion vaso mesa central
+	if(true)
 	{
-		ballPosZ += 0.5;
-		Pos.z += 0.5;
+		if (refRot >= 360)
+		{
+			refRot = 0;
+		}
+
+		if (refRot >= 0 && refRot < 90)
+		{
+			//4
+			refRot += 1.0f;
+		}
+		if (refRot >= 90 && refRot < 180)
+		{
+			//1
+			refRot += 2.5f;
+		}
+		if (refRot >= 180 && refRot < 270)
+		{
+			//2
+			refRot += 2.0f;
+		}
+		if (refRot >= 270 && refRot < 360)
+		{
+			//3
+			refRot += 1.5f;
+		}
+		//refRot += 1.5f;
 	}
 
-	if (keys[GLFW_KEY_Y])
+	//Maquina estados servilleta
+	double count = 0;
+	if (napkinAttached)
 	{
-		ballPosZ -= 0.5;
-		Pos.z -= 0.5;
+		servPos = glm::vec3(0.0f, 0.0f, 0.0f);
+		servRot = 0;
+		count = 0;
+		napkinFlew = true;
+		napkinAttached = false;
 	}
 
-	if (keys[GLFW_KEY_U])
+	if (napkinFlew)
 	{
-		ballPosX -= 0.5;
-		Pos.x -= 0.5;
+		if ((servPos.y >= 2.5f) && (servRot >= 360.0f) && (servPos.z <= -3.0f) && (servRot2 >= 270))
+		{
+			napkinFlew = false;
+			napkinFlying = true;
+		}
+		else
+		{
+			if (servPos.z <= -3)
+			{
+				servPos.z = -3;
+			}
+			else
+			{
+				servPos.z -= 0.05f;
+			}
+
+			if (servPos.y >= 2.5)
+			{
+				servPos.y = 2.5;
+			}
+			else
+			{
+				servPos.y += 0.05f;
+			}
+
+			if (servRot >= 360)
+			{
+				servRot = 360;
+			}
+			else
+			{
+				servRot += 5;
+			}
+
+			if (servRot2 >= 270)
+			{
+				servRot2 = 270;
+			}
+			else
+			{
+				servRot2 += 5;
+			}
+		}
 	}
 
-	if (keys[GLFW_KEY_J])
+	if (napkinFlying)
 	{
-		ballPosX += 0.5;
-		Pos.x += 0.5;
+		servRot = 0;
+		servRot2 = 90.0f;
+		servPos.x = (2 * sin(3.14159265 * ((20 / 11) * servPos.y) + 1.4));
+		if (servPos.y <= -3)
+		{
+			napkinFloored = true;
+			napkinFlying = false;
+		}
+		else
+		{
+			servPos.y -= 0.02f;
+		}
 	}
 
-	if (keys[GLFW_KEY_O])
+	if (napkinFloored)
 	{
-		ballPosY += 0.5;
-		Pos.y += 0.5;
+		napkinAttached = true;
+		napkinFloored = false;
 	}
-
-	if (keys[GLFW_KEY_P])
-	{
-		ballPosY -= 0.5;
-		Pos.y -= 0.5;
-	}*/
-
-
 
 
 	// Camera controls
