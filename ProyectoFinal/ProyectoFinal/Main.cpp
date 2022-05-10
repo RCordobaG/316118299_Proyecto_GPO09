@@ -324,6 +324,7 @@ int main()
 	Model Refresco((char*)"Models/Refresco/tapa.obj");
 	Model Refresco2((char*)"Models/Refresco/tapaless.obj");
 	Model Servilleta((char*)"Models/Servilletero/servilleta.obj");
+	Model AC((char*)"Models/fachada/AC.obj");
 
 
 	//Objeto traslucido
@@ -560,10 +561,10 @@ int main()
 	//F4
 	setFrameValues(0.75, 11.725, -19, 0, 0, 0, 0, 0, 0, 0);
 	saveFrame();
-	//F4
+	//F5
 	setFrameValues(0.75, 11.725, -34, 0, 0, 0, 0, 0, 0, 0);
 	saveFrame();
-	//F5
+	//F6
 	setFrameValues(0.75, 11.725, -40, 0, -4, 0, 0, -0.5, 0, 90);
 	saveFrame();
 	//F7
@@ -937,11 +938,16 @@ int main()
 		//Computadoras
 		view = camera.GetViewMatrix();
 		model = modelPos;
-		//model = glm::translate(model, glm::vec3(15.8f, -3.9f, -15.5f));
-		//model = glm::rotate(model, glm::radians(recRot), glm::vec3(0.0f, 0.0f, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		PC.Draw(lightingShader);
+
+		//Sistema de aire acondicionado
+		view = camera.GetViewMatrix();
+		model = modelPos;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
+		AC.Draw(lightingShader);
 
 		//Objetos de ambiente
 		view = camera.GetViewMatrix();
