@@ -43,13 +43,10 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
-float range = 0.0f;
-float rot = 0.0f;
 float DoorRot = 180.0f;
 float recRot = 0.0f;
 float chairZ = 0.0f;
 float refRot = 0.0f;
-float movCamera = 0.0f;
 float ballRotX,ballRotY,ballRotZ = 0.0f;
 float amX,amY,amZ = 0.0f;
 bool isDoorOpen = true;
@@ -240,9 +237,6 @@ int main()
 {
 	// Init GLFW
 	glfwInit();
-
-
-
 
 	// Set all the required options for GLFW
 	/*(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -726,31 +720,25 @@ int main()
 		glm::mat4 model(1);
 		model = glm::mat4(1);
 		modelPos = model = glm::translate(model, glm::vec3(0.0f, 0.0f, -100.0f));
-		//model = glm::rotate(model, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(0.0f, 2.5f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Fachada.Draw(lightingShader);
 		//Banqueta
 		view = camera.GetViewMatrix();
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Banqueta.Draw(lightingShader);
 		view = camera.GetViewMatrix();
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Concealer.Draw(lightingShader);
 		//Edificios Adicionales (Ambiente)
 		view = camera.GetViewMatrix();
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Edificios.Draw(lightingShader);
 		//Luminaria
 		view = camera.GetViewMatrix();
-		//model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Luminaria.Draw(lightingShader);
@@ -803,7 +791,6 @@ int main()
 		//Paneles de control
 		view = camera.GetViewMatrix();
 		model = modelPos;
-		//model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Panel.Draw(lightingShader);
@@ -958,7 +945,6 @@ int main()
 		view = camera.GetViewMatrix();
 		model = modelPos;
 		model = glm::translate(model, glm::vec3(4.0f, 0.0f, -0.5f));
-		//model = glm::rotate(model, glm::radians(50.0f), glm::vec3(0.0f, 1.0f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Refresco.Draw(lightingShader);
@@ -966,7 +952,6 @@ int main()
 		//Servilleteros
 		view = camera.GetViewMatrix();
 		model = modelPos;
-		//model = glm::translate(model, glm::vec3(3.0f, 0.0f, 0.5f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Servilletero.Draw(lightingShader);
@@ -998,7 +983,6 @@ int main()
 		model = modelPos;
 		model = glm::translate(model, glm::vec3(1.75f, 13.85f, 5.5f));
 		tmp = model;
-		//model = glm::rotate(model, glm::radians(refRot), glm::vec3(0.0f, 1.0f, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		Servilleta.Draw(lightingShader);
@@ -1070,7 +1054,6 @@ int main()
 		model = glm::translate(model, glm::vec3(0.35f, 0.0f, -0.5f));
 		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
 		model = glm::rotate(model, glm::radians(pinRot), glm::vec3(1, 0, 0));
-		//model = glm::rotate(model, glm::radians(pinRot), glm::vec3(0, 0, 1));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
 		pin2.Draw(lightingShader);
@@ -1090,7 +1073,6 @@ int main()
 		model = glm::translate(model, pinOffset);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
 		model = glm::translate(model, glm::vec3(pinPosX, pinPosY, pinPosZ));
-		//model = glm::rotate(model, glm::radians(pinRot), glm::vec3(0, 0, 1));
 		model = glm::rotate(model, glm::radians(-pinRot), glm::vec3(1, 0, 0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 0.0);
@@ -1160,15 +1142,14 @@ int main()
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Puertas
+		//Animacion sencilla 1
 		tmp = model = modelPos;
-		//model = glm::scale(model, glm::vec3(1.0f));
 		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -30.7f));
 		model = glm::rotate(model, glm::radians(-DoorRot), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "transparencia"), 1.0);
 		PuertaIzq.Draw(lightingShader);
 		model = tmp;
-		//model = glm::scale(model, glm::vec3(1.0f));
 		model = glm::translate(model, glm::vec3(-12.5f, -1.2f, -20.7f));
 		model = glm::rotate(model, glm::radians(DoorRot), glm::vec3(0.0f, 1.0f, 0.0));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -1252,12 +1233,40 @@ void animacion()
 				printf("termina anim\n");
 				playIndex = 0;
 				play = false;
+				LightP1 = glm::vec3(0.0f, 0.0f, 0.0f);
 			}
 			else //Next frame interpolations
 			{
 				i_curr_steps = 0; //Reset counter
 								  //Interpolation
 				interpolation();
+				
+				LightP1 = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
+				if ((playIndex == 1) || (playIndex==2))
+				{
+					ballMoving = false;
+				}
+				else
+				{
+					ballMoving = true;
+				}
+				amX = rand() % 20;
+				amY = rand() % 20;
+				amZ = rand() % 20;
+				if ((rand() % 4) >= 2)
+				{
+					amX = -amX;
+				}
+				if ((rand() % 4) >= 2)
+				{
+					amY = -amY;
+				}
+				if ((rand() % 4) >= 2)
+				{
+					amZ = -amZ;
+				}
 			}
 		}
 		else
@@ -1287,82 +1296,6 @@ void animacion()
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	if (keys[GLFW_KEY_L])
-	{
-		if (play == false && (FrameIndex > 1))
-		{
-
-			resetElements();
-			//First Interpolation				
-			interpolation();
-
-			play = true;
-			playIndex = 0;
-			i_curr_steps = 0;
-		}
-		else
-		{
-			play = false;
-		}
-
-	}
-
-	//if (keys[GLFW_KEY_K])
-	//{
-	//	if (FrameIndex < MAX_FRAMES)
-	//	{
-	//		saveFrame();
-	//	}
-
-	//	rot = -25.0f;//Variable que maneja el giro de la camara
-
-	//}
-
-	if (keys[GLFW_KEY_P])
-	{
-		doorMoving = true;
-		if (isDoorOpen)
-		{
-			isDoorOpen = false;
-			//DoorRot = 180.0f;
-		}
-		else
-		{
-			isDoorOpen = true;
-			//DoorRot = 90.0f;
-		}
-	}
-
-	if (keys[GLFW_KEY_R])
-	{
-		recMoving = true;
-		if (isRecOpen)
-		{
-			isRecOpen = false;
-			//DoorRot = 180.0f;
-		}
-		else
-		{
-			isRecOpen = true;
-			//DoorRot = 90.0f;
-		}
-	}
-
-	if (keys[GLFW_KEY_C])
-	{
-		chairMoving = true;
-		if (isChairOpen)
-		{
-			isChairOpen = false;
-			//DoorRot = 180.0f;
-		}
-		else
-		{
-			isChairOpen = true;
-			//DoorRot = 90.0f;
-		}
-	}
-
 	if (keys[GLFW_KEY_B])
 	{
 		amX = rand() % 20;
@@ -1379,6 +1312,60 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		if ((rand() % 4) >= 2)
 		{
 			amZ = -amZ;
+		}
+		if (play == false && (FrameIndex > 1))
+		{
+			resetElements();
+			//First Interpolation				
+			interpolation();
+
+			play = true;
+			playIndex = 0;
+			i_curr_steps = 0;
+		}
+		else
+		{
+			play = false;
+		}
+
+	}
+
+	if (keys[GLFW_KEY_P])
+	{
+		doorMoving = true;
+		if (isDoorOpen)
+		{
+			isDoorOpen = false;
+		}
+		else
+		{
+			isDoorOpen = true;
+		}
+	}
+
+	if (keys[GLFW_KEY_R])
+	{
+		recMoving = true;
+		if (isRecOpen)
+		{
+			isRecOpen = false;
+		}
+		else
+		{
+			isRecOpen = true;
+		}
+	}
+
+	if (keys[GLFW_KEY_C])
+	{
+		chairMoving = true;
+		if (isChairOpen)
+		{
+			isChairOpen = false;
+		}
+		else
+		{
+			isChairOpen = true;
 		}
 	}
 
@@ -1433,7 +1420,7 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 void DoMovement()
 {
 	//Puertas
-	//DoorRot = 90 - abierto
+	//DoorRot = 30 - abierto
 	//			180 - cerrado
 	if (doorMoving)
 	{
@@ -1519,13 +1506,6 @@ void DoMovement()
 		}
 	}
 
-	if (keys[GLFW_KEY_1])
-	{
-
-		movCamera = 0.01f;//Manda una velocidad de 0.01 a la camara automatica
-
-	}
-
 	//Bowling Ball
 	if (ballMoving)
 	{
@@ -1562,7 +1542,6 @@ void DoMovement()
 			//3
 			refRot += 1.5f;
 		}
-		//refRot += 1.5f;
 	}
 
 	//Maquina estados servilleta
